@@ -26,7 +26,6 @@ const port = 8000;
 
 let namespaces = {}; //AKA party rooms
 
-const express = require("express");
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
