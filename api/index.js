@@ -1,12 +1,19 @@
 const express = require('express');
 const moment = require('moment');
-
+const http = require("http");
+const { Server } = require("socket.io");
 // Server/express setup
 const app = express();
 const cors = require('cors');
 app.use(cors());
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+
+const io = new Server(server, {
+    cors: {
+        origin: "https://coup-online-master-qm3k.vercel.app/", // Substitua pelo domínio do frontend
+        methods: ["GET", "POST"]
+    }
+});
 const CoupGame = require('./game/coup');
 // const game = new CoupGame([ { name: 'Ethan',
 // socketID: '/DPRI33#OJIB1ERYp-M_K-m5AAAD',
@@ -29,7 +36,7 @@ let namespaces = {}; //AKA party rooms
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
+app.listen(3001, () => console.log("Server ready on port 3000."));
 
 app.get('/createNamespace', function (req, res) {
     let newNamespace = '';
